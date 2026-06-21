@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Importer — for your portfolio site</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;1,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14140f; --surface:#1b1b14; --text:#ede8dc; --text-dim:#a39d8a;
+    --accent-gold:#c9a227; --line:rgba(237,232,220,0.13);
+    --font-display:'Fraunces',serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-body); margin:0; padding:40px 5vw 100px;}
+  h1{font-family:var(--font-display); font-style:italic; font-weight:500; font-size:2.2rem; margin-bottom:8px;}
+  p.lede{color:var(--text-dim); max-width:60ch; margin-bottom:30px; line-height:1.5;}
+  .steps{
+    background:var(--surface); border:1px solid var(--line); border-radius:4px;
+    padding:18px 22px; margin-bottom:34px; font-size:.92rem; color:var(--text-dim); line-height:1.7;
+  }
+  .steps b{color:var(--text);}
+  #dropzone{
+    border:2px dashed var(--line); border-radius:6px; padding:60px 20px;
+    text-align:center; cursor:pointer; transition:.2s ease; margin-bottom:34px;
+  }
+  #dropzone.drag{border-color:var(--accent-gold); background:rgba(201,162,39,.06);}
+  #dropzone p{font-family:var(--font-mono); font-size:.85rem; letter-spacing:.05em; color:var(--text-dim);}
+  #fileInput{display:none;}
+
+  #list{display:flex; flex-direction:column; gap:14px;}
+  .row{
+    display:grid; grid-template-columns:110px 1fr; gap:18px;
+    background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:14px;
+  }
+  .row img{width:110px; height:110px; object-fit:cover; border-radius:3px;}
+  .fields{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .field{display:flex; flex-direction:column; gap:4px;}
+  .field label{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim);}
+  .field input, .field select{
+    background:var(--bg); border:1px solid var(--line); border-radius:3px; color:var(--text);
+    font-family:var(--font-body); font-size:.85rem; padding:7px 9px;
+  }
+  .meta-readout{
+    grid-column:1 / -1; font-family:var(--font-mono); font-size:.68rem; color:var(--accent-gold); margin-top:2px;
+  }
+  .filename{font-family:var(--font-mono); font-size:.65rem; color:var(--text-dim); grid-column:1/-1;}
+
+  .toolbar{
+    position:sticky; bottom:0; background:var(--bg); border-top:1px solid var(--line);
+    padding:18px 0; margin-top:30px; display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+  }
+  button.primary{
+    background:var(--accent-gold); color:var(--bg); border:none; border-radius:3px;
+    font-family:var(--font-mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:12px 22px; cursor:pointer;
+  }
+  button.secondary{
+    background:none; border:1px solid var(--line); color:var(--text-dim); border-radius:3px;
+    font-family:var(--font-mono); font-size:.78rem; padding:12px 18px; cursor:pointer;
+  }
+  #count{font-family:var(--font-mono); font-size:.78rem; color:var(--text-dim);}
+  #output{
+    width:100%; min-height:240px; margin-top:20px; background:var(--surface);
+    border:1px solid var(--line); border-radius:4px; color:var(--text);
+    font-family:var(--font-mono); font-size:.78rem; padding:16px; display:none; white-space:pre;
+  }
+  #copyMsg{font-family:var(--font-mono); font-size:.75rem; color:var(--accent-gold); display:none;}
+</style>
+</head>
+<body>
+
+<h1>Photo Importer</h1>
+<p class="lede">Drop your curated photos in below. This reads the date, camera settings, and orientation straight from each file (nothing is uploaded anywhere — it all stays in your browser), and builds the code block your portfolio site needs.</p>
+
+<div class="steps">
+  <b>1.</b> Drop the exact photo files you want on the site (the ones you'll also copy into your <b>images</b> folder).<br>
+  <b>2.</b> Fill in a title, location, category, and region for each one — everything else is auto-filled where possible.<br>
+  <b>3.</b> Click <b>Generate Code</b>, then <b>Copy</b>.<br>
+  <b>4.</b> Open <b>data/photos.json</b>, find the <span style="color:var(--text)">"photos": [</span> line, and paste the copied entries in as new items in that list (each one separated by a comma).<br>
+  <b>5.</b> Copy the same original photo files into your site's <b>images</b> folder — filenames already match, so nothing else to rename.<br>
+  <b>6.</b> If you're using the CMS at <b>/admin</b>, commit and push the updated <b>data/photos.json</b> and <b>images</b> folder to GitHub — the site rebuilds automatically. Otherwise, redeploy by dragging the folder into Netlify again.
+</div>
+
+<div id="dropzone">
+  <p>DRAG PHOTOS HERE, OR CLICK TO CHOOSE FILES</p>
+  <input type="file" id="fileInput" multiple accept="image/*">
+</div>
+
+<div id="list"></div>
+
+<div class="toolbar">
+  <button class="primary" id="generateBtn">Generate Code</button>
+  <button class="secondary" id="copyBtn" style="display:none;">Copy to Clipboard</button>
+  <span id="count">0 photos loaded</span>
+  <span id="copyMsg">Copied ✓ — now paste it into index.html</span>
+</div>
+
+<textarea id="output" readonly></textarea>
+
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const list = document.getElementById('list');
+const countEl = document.getElementById('count');
+const output = document.getElementById('output');
+let items = [];
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function humanize(name){
+  return name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function monthYear(dateStr){
+  if(!dateStr) return '';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const parts = dateStr.split(' ')[0].split(':');
+  if(parts.length < 2) return '';
+  return `${months[parseInt(parts[1],10)-1]} ${parts[0]}`;
+}
+
+function dmsToCoord(dms, ref){
+  if(!dms || !ref) return null;
+  const deg = Math.floor(dms[0]);
+  const min = Math.floor(dms[1]);
+  return `${deg}°${String(min).padStart(2,'0')}'${ref}`;
+}
+
+function buildSettings(tags){
+  const parts = [];
+  if(tags.FocalLength) parts.push(`${Math.round(tags.FocalLength)}mm`);
+  if(tags.FNumber) parts.push(`f/${tags.FNumber}`);
+  if(tags.ExposureTime){
+    parts.push(tags.ExposureTime < 1 ? `1/${Math.round(1/tags.ExposureTime)}` : `${tags.ExposureTime}s`);
+  }
+  if(tags.ISOSpeedRatings) parts.push(`ISO ${tags.ISOSpeedRatings}`);
+  return parts.join(' · ');
+}
+
+function handleFiles(fileList){
+  Array.from(fileList).forEach(file => {
+    const item = {
+      file, title: humanize(file.name), location: '', region: '', category: 'landscape',
+      width: 1400, height: 1000, date: '', coords: '', settings: ''
+    };
+    items.push(item);
+    renderItem(item);
+
+    // orientation -> exact pixel dimensions, used directly for true masonry layout
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      item.width = img.naturalWidth;
+      item.height = img.naturalHeight;
+    };
+    img.src = url;
+
+    // EXIF
+    const reader = new FileReader();
+    reader.onload = e => {
+      try{
+        const tags = EXIF.readFromBinaryFile(e.target.result);
+        if(tags){
+          item.date = monthYear(tags.DateTimeOriginal);
+          item.settings = buildSettings(tags);
+          const lat = dmsToCoord(tags.GPSLatitude, tags.GPSLatitudeRef);
+          const lon = dmsToCoord(tags.GPSLongitude, tags.GPSLongitudeRef);
+          item.coords = (lat && lon) ? `${lat} ${lon}` : '';
+        }
+      }catch(err){ /* no exif, fine */ }
+      const readout = document.querySelector(`[data-meta-for="${item.id}"]`);
+      if(readout){
+        readout.textContent = [item.date, item.settings, item.coords].filter(Boolean).join('  ·  ') || 'No EXIF data found — fill in manually if needed';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+  countEl.textContent = `${items.length} photo${items.length===1?'':'s'} loaded`;
+}
+
+let idCounter = 0;
+function renderItem(item){
+  item.id = idCounter++;
+  const url = URL.createObjectURL(item.file);
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = `
+    <img src="${url}" alt="">
+    <div class="fields">
+      <div class="field"><label>Title</label><input type="text" value="${item.title}" data-field="title" data-id="${item.id}"></div>
+      <div class="field"><label>Location</label><input type="text" placeholder="e.g. Hemis NP, Ladakh" data-field="location" data-id="${item.id}"></div>
+      <div class="field"><label>Region (for browse-by-location filter)</label><input type="text" placeholder="e.g. Ladakh, India or Serengeti" data-field="region" data-id="${item.id}"></div>
+      <div class="field"><label>Category</label>
+        <select data-field="category" data-id="${item.id}">
+          <option value="landscape">landscape</option>
+          <option value="wildlife">wildlife</option>
+        </select>
+      </div>
+      <div class="filename">${item.file.name}</div>
+      <div class="meta-readout" data-meta-for="${item.id}">Reading photo data…</div>
+    </div>
+  `;
+  list.appendChild(row);
+
+  row.querySelectorAll('[data-field]').forEach(el => {
+    el.addEventListener('input', () => {
+      const target = items.find(i => i.id === item.id);
+      target[el.dataset.field] = el.value;
+    });
+  });
+}
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+  const blocks = items.map(p => {
+    const esc = s => (s || '').replace(/"/g, "'");
+    return `    { "title": "${esc(p.title)}", "category": "${esc(p.category)}", "region": "${esc(p.region)}", "width": ${p.width}, "height": ${p.height}, "location": "${esc(p.location)}", "coords": "${esc(p.coords)}", "date": "${esc(p.date)}", "settings": "${esc(p.settings)}", "src": "images/${p.file.name}" }`;
+  });
+  output.value = blocks.join(',\n');
+  output.style.display = 'block';
+  document.getElementById('copyBtn').style.display = 'inline-block';
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  output.select();
+  navigator.clipboard.writeText(output.value).then(() => {
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => msg.style.display = 'none', 4000);
+  });
+});
+</script>
+</body>
+</html>

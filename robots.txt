@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /photo-importer.html
+Disallow: /thank-you
+Disallow: /admin
+
+Sitemap: https://sanjaymehrotra.ca/sitemap.xml
