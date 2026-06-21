@@ -1,0 +1,23 @@
+{
+  "heroEyebrow": "FIELD LOG — VOL. 04 / EST. 2018",
+  "heroTitle": "Wild places, held still.",
+  "heroImage": "",
+  "name": "Sanjay Mehrotra",
+  "tagline": "Wildlife & Landscape Photographer",
+  "basedIn": "[Your City]",
+  "aboutHeading": "Eight years chasing light across six continents.",
+  "aboutParagraph1": "I'm a wildlife and landscape photographer working between the field and home — currently based in [Your City]. My work centers on patience: waiting out weather, waiting on animals, waiting for the one frame that earns the trip.",
+  "aboutParagraph2": "Prints, licensing, and guided photo expeditions are available on request. I travel light, shoot manual, and rarely crop.",
+  "pullQuote": "The best frame is rarely the one you planned for.",
+  "stats": [
+    { "num": "23", "label": "Countries" },
+    { "num": "140K+", "label": "Miles logged" },
+    { "num": "12", "label": "Publications" }
+  ],
+  "contactEmail": "hello@sanjaymehrotra.ca",
+  "socialLinks": [
+    { "label": "Instagram", "url": "#" },
+    { "label": "Behance", "url": "#" },
+    { "label": "500px", "url": "#" }
+  ]
+}

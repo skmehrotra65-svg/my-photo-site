@@ -1,0 +1,71 @@
+# ============================================================
+# CMS CONFIGURATION
+# ------------------------------------------------------------
+# 1. Replace YOUR_GITHUB_USERNAME/YOUR_REPO_NAME below with your
+#    actual GitHub repository path once it exists.
+# 2. Everything else here is already set up to match the site.
+# ============================================================
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  branch: main
+  base_url: https://api.netlify.com
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "photos"
+    label: "Photos"
+    files:
+      - file: "data/photos.json"
+        label: "Photo Gallery"
+        name: "photos"
+        fields:
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            summary: "{{title}} — {{category}} / {{region}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "string", hint: "e.g. wildlife, landscape, underwater — type any word and a filter button for it appears on the site automatically" }
+              - { label: "Region / Trip", name: "region", widget: "string", hint: "e.g. Serengeti, China, Ladakh — type any word and a filter button appears automatically" }
+              - { label: "Photo", name: "src", widget: "image" }
+              - { label: "Title / caption text", name: "location", widget: "string", hint: "Shown under the photo, e.g. 'Hemis NP, Ladakh, India'" }
+              - { label: "Coordinates", name: "coords", widget: "string", required: false, hint: "Optional, e.g. 34°08'N 77°33'E" }
+              - { label: "Date taken", name: "date", widget: "string", required: false, hint: "e.g. Feb 2025" }
+              - { label: "Camera settings", name: "settings", widget: "string", required: false, hint: "e.g. 600mm · f/5.6 · 1/1000 · ISO 800 — use the Photo Importer tool to generate this automatically from the file's EXIF data" }
+              - { label: "Width (px)", name: "width", widget: "number", default: 1400, hint: "Leave as default unless you know the exact pixel size — only affects the grid shape" }
+              - { label: "Height (px)", name: "height", widget: "number", default: 1000 }
+
+  - name: "site"
+    label: "Site Text"
+    files:
+      - file: "data/site.json"
+        label: "Site Settings"
+        name: "site"
+        fields:
+          - { label: "Your Name", name: "name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Based In", name: "basedIn", widget: "string" }
+          - { label: "Hero Eyebrow Line", name: "heroEyebrow", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Background Photo", name: "heroImage", widget: "image", required: false, hint: "Optional — leave empty to keep the gradient background" }
+          - { label: "About Heading", name: "aboutHeading", widget: "string" }
+          - { label: "About Paragraph 1", name: "aboutParagraph1", widget: "text" }
+          - { label: "About Paragraph 2", name: "aboutParagraph2", widget: "text" }
+          - { label: "Pull Quote", name: "pullQuote", widget: "string" }
+          - label: "Stats"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Number", name: "num", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - { label: "Contact Email", name: "contactEmail", widget: "string" }
+          - label: "Social Links"
+            name: "socialLinks"
+            widget: "list"
+            fields:
+              - { label: "Platform Name", name: "label", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
