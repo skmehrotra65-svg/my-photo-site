@@ -260,7 +260,8 @@
   }
   .card:hover, .card:focus-visible{transform:translateY(-4px); border-color:var(--accent-gold);}
   .card-media{position:relative; width:100%; overflow:hidden;}
-  .card-media img, .lightbox-media img{height:auto; object-fit:cover;}
+  .card-media img{height:100%; object-fit:cover;}
+  .lightbox-media img{height:auto; object-fit:cover;}
   .card-media::after, .lightbox-media::after{
     content:'';
     position:absolute; inset:0;
