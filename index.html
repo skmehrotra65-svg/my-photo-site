@@ -623,7 +623,8 @@ function layoutMasonry(){
   const rowHeight = parseFloat(styles.gridAutoRows) || 1;
   const rowGap = parseFloat(styles.rowGap || styles.gridRowGap) || 0;
   grid.querySelectorAll('.card').forEach(card => {
-    const h = card.getBoundingClientRect().height;
+    const media = card.querySelector('.card-media');
+    const h = (media || card).getBoundingClientRect().height;
     const span = Math.ceil((h + rowGap) / (rowHeight + rowGap));
     card.style.gridRowEnd = `span ${span}`;
   });
