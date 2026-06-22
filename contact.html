@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Sanjay Mehrotra Photography</title>
+<meta name="description" content="Get in touch with Sanjay Mehrotra for prints, licensing, and guided photo expeditions.">
+<meta property="og:title" content="Contact — Sanjay Mehrotra Photography">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sanjaymehrotra.ca/contact">
+<meta property="og:image" content="https://sanjaymehrotra.ca/images/og-cover.jpg">
+<link rel="canonical" href="https://sanjaymehrotra.ca/contact">
+<meta name="theme-color" content="#14140f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2314140f'/%3E%3Cellipse cx='50' cy='52' rx='28' ry='19' fill='none' stroke='%23c9a227' stroke-width='5'/%3E%3Ccircle cx='50' cy='52' r='9' fill='%23c9a227'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14140f; --surface:#1b1b14; --surface-2:#232319;
+    --text:#ede8dc; --text-dim:#a39d8a;
+    --accent-gold:#c9a227; --accent-moss:#7a8a64; --accent-slate:#8aa0b3;
+    --line:rgba(237,232,220,0.13);
+    --font-display:'Fraunces',serif; --font-mono:'JetBrains Mono',monospace; --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-body); line-height:1.5; -webkit-font-smoothing:antialiased;}
+  img{display:block; width:100%;}
+  a{color:inherit; text-decoration:none;}
+  button{font:inherit; color:inherit; background:none; border:none; cursor:pointer;}
+  .eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-dim);}
+
+  .topo{
+    position:absolute; inset:0; opacity:.16; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='1'%3E%3Cellipse cx='80' cy='90' rx='60' ry='40'/%3E%3Cellipse cx='80' cy='90' rx='95' ry='68'/%3E%3Cellipse cx='80' cy='90' rx='130' ry='96'/%3E%3Cellipse cx='320' cy='300' rx='70' ry='48'/%3E%3Cellipse cx='320' cy='300' rx='110' ry='78'/%3E%3Cellipse cx='320' cy='300' rx='150' ry='108'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:480px 480px;
+  }
+
+  /* nav */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 5vw; transition:background .3s ease, border-color .3s ease, padding .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.nav.scrolled{background:rgba(20,20,15,0.86); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding:14px 5vw;}
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none;
+  }
+  .logo-icon{
+    width:36px; height:36px; flex-shrink:0;
+    fill:#eb7134; transition:fill .2s ease;
+  }
+  .logo:hover .logo-icon{fill:var(--accent-gold);}
+  .logo-text{display:flex; flex-direction:column; line-height:1;}
+  .logo-name{
+    font-family:var(--font-mono); font-weight:500;
+    font-size:.82rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--text);
+  }
+  .logo-sub{
+    font-family:var(--font-mono); font-size:.58rem;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--text-dim); margin-top:3px;
+  }
+  nav.links{display:flex; gap:34px;}
+  nav.links a{font-family:var(--font-mono); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); position:relative; padding-bottom:3px;}
+  nav.links a:hover{color:var(--text);}
+  nav.links a.active{color:var(--text);}
+  nav.links a::after{content:''; position:absolute; left:0; bottom:0; height:1px; width:0; background:var(--accent-gold); transition:width .25s ease;}
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  .menu-btn{display:none; font-family:var(--font-mono); font-size:.75rem; letter-spacing:.1em;}
+
+  /* page hero */
+  .page-hero{
+    position:relative; padding:140px 5vw 70px;
+    background:linear-gradient(180deg,#0f0f0b 0%,#14140f 100%);
+    border-bottom:1px solid var(--line); overflow:hidden;
+    text-align:center;
+  }
+  .page-hero h1{
+    font-family:var(--font-display); font-style:italic; font-weight:400;
+    font-size:clamp(2.8rem,6vw,5rem); line-height:1; margin-top:16px;
+  }
+
+  /* contact */
+  .contact-section{
+    position:relative; text-align:center; overflow:hidden;
+    padding:90px 5vw;
+  }
+  .contact-section .topo{opacity:.08;}
+  .contact-inner{position:relative; z-index:2;}
+  .contact-email{
+    font-family:var(--font-display); font-style:italic; font-weight:400;
+    font-size:clamp(1.8rem,5vw,3.6rem);
+    display:inline-block; margin:20px 0 34px;
+    border-bottom:1px solid var(--line); padding-bottom:10px;
+    transition:border-color .25s ease, color .25s ease;
+  }
+  .contact-email:hover{border-color:var(--accent-gold); color:var(--accent-gold);}
+  .social-row{display:flex; gap:28px; justify-content:center; font-family:var(--font-mono); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase;}
+  .social-row a{color:var(--text-dim); border-bottom:1px solid transparent;}
+  .social-row a:hover{color:var(--text); border-color:var(--accent-gold);}
+  .or-divider{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-dim); margin:34px 0 14px;}
+  .contact-form{max-width:480px; margin:40px auto 0; text-align:left; display:flex; flex-direction:column; gap:14px;}
+  .contact-form input, .contact-form textarea{
+    background:var(--surface); border:1px solid var(--line); border-radius:3px;
+    color:var(--text); font-family:var(--font-body); font-size:.95rem; padding:13px 14px; width:100%;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{outline:1px solid var(--accent-gold); border-color:var(--accent-gold);}
+  .contact-form textarea{min-height:140px; resize:vertical;}
+  .contact-form button{
+    align-self:flex-start; background:var(--accent-gold); color:var(--bg); border:none;
+    border-radius:3px; padding:13px 28px; font-family:var(--font-mono); font-size:.78rem;
+    letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:.2s ease;
+  }
+  .contact-form button:hover{opacity:.88;}
+
+  /* footer */
+  footer{padding:28px 5vw; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.68rem; color:var(--text-dim); letter-spacing:.06em; border-top:1px solid var(--line);}
+
+  /* mobile menu */
+  .mobile-menu{
+    position:fixed; inset:0; background:var(--bg); z-index:200;
+    display:flex; flex-direction:column; justify-content:center; gap:30px;
+    padding:5vw; transform:translateY(-100%); transition:transform .35s ease;
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{font-family:var(--font-display); font-style:italic; font-size:2rem;}
+  .mobile-menu-close{position:absolute; top:24px; right:5vw; font-family:var(--font-mono);}
+
+  @media(max-width:860px){
+    nav.links{display:none;}
+    .menu-btn{display:block;}
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-999px;top:auto;background:var(--accent-gold);color:var(--bg);padding:12px 20px;z-index:999;font-family:var(--font-mono);font-size:.8rem;">Skip to content</a>
+
+<header class="nav" id="siteNav">
+  <a class="logo" href="/">
+    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="52" rx="30" ry="20" fill="none" stroke="currentColor" stroke-width="5"/>
+      <circle cx="50" cy="52" r="10" fill="currentColor"/>
+      <line x1="50" y1="14" x2="50" y2="32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <line x1="50" y1="72" x2="50" y2="90" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <line x1="12" y1="52" x2="30" y2="52" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <line x1="70" y1="52" x2="88" y2="52" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <span class="logo-text">
+      <span class="logo-name">Sanjay Mehrotra</span>
+      <span class="logo-sub">Photography</span>
+    </span>
+  </a>
+  <nav class="links">
+    <a href="/">Work</a>
+    <a href="/about">About</a>
+    <a href="/contact" class="active">Contact</a>
+    <a href="https://sanjaymehrotra.myportfolio.com" target="_blank" rel="noopener">Full Archive ↗</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">Close ✕</button>
+  <a href="/">Work</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="https://sanjaymehrotra.myportfolio.com" target="_blank" rel="noopener">Full Archive ↗</a>
+</div>
+
+<main id="main">
+  <div class="page-hero">
+    <div class="topo"></div>
+    <div class="eyebrow" style="position:relative;z-index:2;">Prints · Licensing · Expeditions</div>
+    <h1 style="position:relative;z-index:2;">Let's make something together.</h1>
+  </div>
+
+  <section class="contact-section">
+    <div class="topo"></div>
+    <div class="contact-inner">
+      <a class="contact-email" href="mailto:hello@sanjaymehrotra.ca" id="contactEmail">hello@sanjaymehrotra.ca</a>
+      <div class="social-row" id="socialRow">
+        <a href="#">Instagram</a>
+        <a href="#">Behance</a>
+        <a href="#">500px</a>
+      </div>
+      <div class="or-divider">— or send a message directly —</div>
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you">
+        <input type="hidden" name="form-name" value="contact">
+        <p style="position:absolute;left:-9999px;"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" placeholder="Tell me a bit about what you're after — print, license, expedition booking, anything." required></textarea>
+        <button type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Sanjay Mehrotra Photography</span>
+  <span>All images protected — do not reproduce without permission</span>
+</footer>
+
+<script>
+/* fetch site.json to apply editable contact details */
+async function loadSiteData(){
+  try{
+    const res = await fetch('/data/site.json');
+    const site = await res.json();
+    if(site.contactEmail){
+      const el = document.getElementById('contactEmail');
+      el.textContent = site.contactEmail;
+      el.href = `mailto:${site.contactEmail}`;
+    }
+    if(Array.isArray(site.socialLinks) && site.socialLinks.length){
+      document.getElementById('socialRow').innerHTML = site.socialLinks.map(s =>
+        `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`
+      ).join('');
+    }
+  }catch(e){ console.warn('Could not load site.json', e); }
+}
+loadSiteData();
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* nav scroll effect */
+window.addEventListener('scroll', () => {
+  document.getElementById('siteNav').classList.toggle('scrolled', window.scrollY > 30);
+}, {passive:true});
+
+/* mobile menu */
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+menuBtn.addEventListener('click', () => { mobileMenu.classList.add('open'); menuBtn.setAttribute('aria-expanded','true'); });
+mobileMenuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); });
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+</script>
+</body>
+</html>
