@@ -208,7 +208,7 @@
     display:flex; flex-direction:column; align-items:center; gap:8px;
     font-family:var(--font-mono); font-size:.58rem; letter-spacing:.22em;
     text-transform:uppercase;
-    background:linear-gradient(110deg,#eb7134,#c9a227,#7a8a64);
+    background:linear-gradient(135deg,#eb7134,#c9a227,#7a8a64);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     background-clip:text;
     animation:scrollBounce 2.4s ease-in-out infinite;
@@ -249,19 +249,15 @@
   }
   .ticker{
     display:inline-flex; gap:48px;
-    animation:scrollTicker 30s linear infinite;
     font-family:var(--font-mono); font-size:.74rem; letter-spacing:.08em;
-    text-transform:uppercase;
+    text-transform:uppercase; will-change:transform;
   }
   .ticker .t-item{color:#7a3800;}
   .ticker .t-item:nth-child(3n+1){color:#3d1a00;}
   .ticker .t-item:nth-child(3n+2){color:#7a3800;}
   .ticker .t-item:nth-child(3n+3){color:#3d1a00;}
   .ticker span.sep{color:rgba(61,26,0,.4);}
-  @keyframes scrollTicker{
-    from{transform:translateX(0);}
-    to{transform:translateX(-50%);}
-  }
+  /* ticker scrolled by JS */
   @media (prefers-reduced-motion: reduce){
     .ticker{animation:none;}
     html{scroll-behavior:auto;}
@@ -731,12 +727,28 @@ async function init(){
   buildPillFilters(regionFilters, 'region', 'activeRegion', (v) => activeRegion = v, 'All locations');
   renderGrid();
 
+  /* ---------- ticker — JS pixel scroll for seamless loop ---------- */
   const tickerStrip = document.getElementById('tickerStrip');
   const uniqueRegions = [...new Set(photos.map(p => p.region).filter(Boolean))];
-  const tickerItems = uniqueRegions.map(r => `<span class="t-item">${r}</span>`);
-  const separator = '<span class="sep"> &mdash; </span>';
-  const strip = tickerItems.join(separator);
-  tickerStrip.innerHTML = strip + separator + strip; // duplicate for seamless loop
+  const sep = ' <span class="sep">&mdash;</span> ';
+  const singleStrip = uniqueRegions.map(r => `<span class="t-item">${r}</span>`).join(sep);
+  // Repeat 12× so strip is always wider than any screen
+  tickerStrip.innerHTML = Array(12).fill(singleStrip).join(sep);
+
+  // Measure one copy width after render, then animate
+  requestAnimationFrame(() => {
+    const totalWidth = tickerStrip.scrollWidth;
+    const oneWidth = totalWidth / 12;
+    let pos = 0;
+    const speed = 0.6; // pixels per frame — increase to go faster
+    function animateTicker(){
+      pos -= speed;
+      if(pos <= -oneWidth) pos += oneWidth;
+      tickerStrip.style.transform = `translateX(${pos}px)`;
+      requestAnimationFrame(animateTicker);
+    }
+    requestAnimationFrame(animateTicker);
+  });
 
   async function initSlideshow(){
     try{
