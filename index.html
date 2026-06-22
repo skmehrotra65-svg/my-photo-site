@@ -162,11 +162,51 @@
   /* slideshow layers */
   .hero-slide{
     position:absolute; inset:0;
-    background-size:cover; background-position:center;
-    opacity:0; transition:opacity 1.6s ease;
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:0; transition:opacity 1.2s ease;
     will-change:opacity;
   }
   .hero-slide.active{opacity:1;}
+
+  /* name slide — last in rotation, slides in from left */
+  .hero-name-slide{
+    position:absolute; inset:0;
+    background:#0a0a07;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    opacity:0; transition:opacity 1.2s ease;
+  }
+  .hero-name-slide.active{opacity:1;}
+  .hero-name-main{
+    font-family:var(--font-mono);
+    font-weight:500;
+    font-size:clamp(2rem, 7vw, 6rem);
+    letter-spacing:.28em;
+    color:#eb7134;
+    text-transform:uppercase;
+    transform:translateX(-80px);
+    opacity:0;
+    transition:transform 1s cubic-bezier(.22,.8,.44,1) .3s, opacity .8s ease .3s;
+  }
+  .hero-name-slide.active .hero-name-main{
+    transform:translateX(0); opacity:1;
+  }
+  .hero-name-sub{
+    font-family:var(--font-mono);
+    font-size:clamp(.6rem, 1.4vw, .82rem);
+    letter-spacing:.32em;
+    color:rgba(255,255,255,.45);
+    text-transform:uppercase;
+    margin-top:16px;
+    transform:translateX(-60px);
+    opacity:0;
+    transition:transform 1s cubic-bezier(.22,.8,.44,1) .55s, opacity .8s ease .55s;
+  }
+  .hero-name-slide.active .hero-name-sub{
+    transform:translateX(0); opacity:1;
+  }
   /* gradient — heavier at bottom for name legibility */
   .hero-overlay{
     position:absolute; inset:0; z-index:1;
@@ -178,34 +218,7 @@
       rgba(0,0,0,.70) 100%
     );
   }
-  /* name block — bottom left, glides up on load */
-  .hero-identity{
-    position:absolute; bottom:80px; left:5vw; z-index:3;
-    opacity:0; transform:translateY(40px);
-    animation:glideUp 1.1s cubic-bezier(.22,.8,.44,1) forwards;
-    animation-delay:.7s;
-  }
-  @keyframes glideUp{
-    to{ opacity:1; transform:translateY(0); }
-  }
-  h1.hero-title{
-    font-family:var(--font-mono);
-    font-weight:500;
-    font-size:clamp(1.4rem, 3.5vw, 2.6rem);
-    line-height:1;
-    letter-spacing:.22em;
-    color:#eb7134;
-    text-transform:uppercase;
-    margin:0;
-  }
-  .hero-sub{
-    font-family:var(--font-mono);
-    font-size:clamp(.6rem, 1.1vw, .75rem);
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.55);
-    margin-top:7px;
-  }
+  /* name & tagline live in the name slide, not overlaid on photos */
   /* scroll cue — bottom centre, gradient colour, bouncing */
   .scroll-cue{
     position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
@@ -535,10 +548,6 @@
 <header class="hero" id="top">
   <div id="heroSlides"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-identity">
-    <h1 class="hero-title" id="heroTitle">Sanjay Mehrotra</h1>
-    <div class="hero-sub" id="heroSub">Wildlife &amp; Landscape Photographer</div>
-  </div>
   <div class="scroll-cue">Scroll</div>
 </header>
 
@@ -744,7 +753,6 @@ async function init(){
   const tickerItems = photos.map(p => `${p.location} <span class="sep">·</span> ${p.coords}`);
   tickerStrip.innerHTML = tickerItems.concat(tickerItems).map(t => `<span class="t-item">${t}</span>`).join('<span class="sep"> — </span>');
 
-  /* ---------- hero slideshow — loaded from data/slideshow.json ---------- */
   async function initSlideshow(){
     try{
       const res = await fetch('data/slideshow.json');
@@ -752,6 +760,8 @@ async function init(){
       const slides = (data.slides || []).filter(s => s.src);
       const slidesEl = document.getElementById('heroSlides');
       if(!slides.length) return;
+
+      /* photo slides */
       slides.forEach((s, i) => {
         const div = document.createElement('div');
         div.className = 'hero-slide' + (i === 0 ? ' active' : '');
@@ -759,13 +769,25 @@ async function init(){
         div.setAttribute('aria-hidden','true');
         slidesEl.appendChild(div);
       });
+
+      /* name slide — last in rotation */
+      const nameSlide = document.createElement('div');
+      nameSlide.className = 'hero-name-slide';
+      nameSlide.innerHTML = `
+        <div class="hero-name-main">Sanjay Mehrotra</div>
+        <div class="hero-name-sub">Wildlife &amp; Landscape Photographer</div>
+      `;
+      slidesEl.appendChild(nameSlide);
+
+      const allSlides = slidesEl.querySelectorAll('.hero-slide, .hero-name-slide');
       let current = 0;
+
       setInterval(() => {
-        const els = slidesEl.querySelectorAll('.hero-slide');
-        els[current].classList.remove('active');
-        current = (current + 1) % els.length;
-        els[current].classList.add('active');
-      }, 5000);
+        allSlides[current].classList.remove('active');
+        current = (current + 1) % allSlides.length;
+        allSlides[current].classList.add('active');
+      }, 3500);
+
     }catch(e){ console.warn('Could not load slideshow.json', e); }
   }
   initSlideshow();
