@@ -458,7 +458,7 @@
   .lightbox-close, .lightbox-prev, .lightbox-next{
     position:absolute; font-family:var(--font-mono); font-size:.9rem;
     color:var(--text-dim); border:1px solid var(--line); border-radius:50%;
-    width:42px; height:42px; display:flex; align-items:center; justify-content:center;
+    width:58px; height:58px; display:flex; align-items:center; justify-content:center;
     transition:.2s ease;
   }
   .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover{color:var(--bg); background:var(--accent-gold); border-color:var(--accent-gold);}
@@ -810,7 +810,6 @@ function renderLightbox(){
     ? `<img src="${optimizedSrc(p.src, 1800)}" onerror="this.onerror=null;this.src='${p.src}';" alt="${p.title} — ${p.location}" draggable="false">`
     : `<span class="placeholder-tag" style="position:relative; display:inline-block; margin:20px;">No image yet — add ${p.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')}.jpg to /images</span>`;
   lbCaption.innerHTML = `
-    <h3>${p.title}</h3>
     <span class="card-category cat-${p.category}">${p.category}</span>
     <span>${p.location} · ${p.coords}</span>
     <span>${p.date} · ${p.settings}</span>`;
