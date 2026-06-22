@@ -154,7 +154,7 @@
 
   /* ---------- hero — fixed stage like Nicklen ---------- */
   .hero-wrapper{
-    background:#0a0a07;
+    background:var(--bg);
     padding:76px 5vw 20px;
     min-height:100svh;
     display:flex; flex-direction:column;
@@ -165,7 +165,7 @@
     aspect-ratio:16/9;
     max-height:calc(100svh - 130px);
     position:relative; overflow:hidden;
-    background:#0a0a07;
+    background:var(--bg);
   }
   .hero-slide{
     position:absolute; inset:0;
@@ -177,7 +177,7 @@
   }
   .hero-slide.active{opacity:1;}
   .hero-name-slide{
-    position:absolute; inset:0; background:#0a0a07;
+    position:absolute; inset:0; background:var(--bg);
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
     opacity:0; transition:opacity 1.2s ease;
