@@ -152,95 +152,71 @@
   }
   .skip-link:focus{left:0; top:0;}
 
-  /* ---------- hero slideshow ---------- */
-  .hero{
-    position:relative;
-    height:100svh;
-    overflow:hidden;
+  /* ---------- hero — fixed stage like Nicklen ---------- */
+  .hero-wrapper{
     background:#0a0a07;
+    padding:88px 5vw 36px;
+    display:flex; flex-direction:column;
+    align-items:center;
   }
-  /* slideshow layers */
+  .hero-stage{
+    width:100%; max-width:1400px;
+    aspect-ratio:16/9;
+    position:relative; overflow:hidden;
+    background:#0a0a07; flex-shrink:0;
+  }
   .hero-slide{
     position:absolute; inset:0;
-    background-size:contain;
-    background-position:center;
-    background-repeat:no-repeat;
+    background-size:cover; background-position:center;
     opacity:0; transition:opacity 1.2s ease;
     will-change:opacity;
   }
   .hero-slide.active{opacity:1;}
-
-  /* name slide — last in rotation, slides in from left */
   .hero-name-slide{
-    position:absolute; inset:0;
-    background:#0a0a07;
+    position:absolute; inset:0; background:#0a0a07;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
     opacity:0; transition:opacity 1.2s ease;
   }
   .hero-name-slide.active{opacity:1;}
   .hero-name-main{
-    font-family:var(--font-mono);
-    font-weight:500;
-    font-size:clamp(2rem, 7vw, 6rem);
-    letter-spacing:.28em;
-    color:#eb7134;
-    text-transform:uppercase;
-    transform:translateX(-80px);
-    opacity:0;
+    font-family:var(--font-mono); font-weight:500;
+    font-size:clamp(2rem,7vw,6rem); letter-spacing:.28em;
+    color:#eb7134; text-transform:uppercase;
+    transform:translateX(-80px); opacity:0;
     transition:transform 1s cubic-bezier(.22,.8,.44,1) .3s, opacity .8s ease .3s;
   }
-  .hero-name-slide.active .hero-name-main{
-    transform:translateX(0); opacity:1;
-  }
+  .hero-name-slide.active .hero-name-main{transform:translateX(0); opacity:1;}
   .hero-name-sub{
     font-family:var(--font-mono);
-    font-size:clamp(.6rem, 1.4vw, .82rem);
-    letter-spacing:.32em;
-    color:rgba(255,255,255,.45);
-    text-transform:uppercase;
-    margin-top:16px;
-    transform:translateX(-60px);
-    opacity:0;
+    font-size:clamp(.6rem,1.4vw,.82rem); letter-spacing:.32em;
+    color:rgba(255,255,255,.45); text-transform:uppercase; margin-top:16px;
+    transform:translateX(-60px); opacity:0;
     transition:transform 1s cubic-bezier(.22,.8,.44,1) .55s, opacity .8s ease .55s;
   }
-  .hero-name-slide.active .hero-name-sub{
-    transform:translateX(0); opacity:1;
-  }
-  /* gradient — heavier at bottom for name legibility */
+  .hero-name-slide.active .hero-name-sub{transform:translateX(0); opacity:1;}
   .hero-overlay{
-    position:absolute; inset:0; z-index:1;
-    background:linear-gradient(
-      180deg,
-      rgba(0,0,0,.25) 0%,
-      rgba(0,0,0,.05) 35%,
-      rgba(0,0,0,.05) 55%,
-      rgba(0,0,0,.70) 100%
-    );
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.3) 100%);
   }
-  /* name & tagline live in the name slide, not overlaid on photos */
-  /* scroll cue — bottom centre, gradient colour, bouncing */
   .scroll-cue{
-    position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
-    z-index:3; display:flex; flex-direction:column; align-items:center; gap:8px;
+    margin-top:20px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
     font-family:var(--font-mono); font-size:.58rem; letter-spacing:.22em;
     text-transform:uppercase;
     background:linear-gradient(135deg,#eb7134,#c9a227,#7a8a64);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     background-clip:text;
     animation:scrollBounce 2.4s ease-in-out infinite;
-    animation-delay:1.8s; opacity:0;
-    animation-fill-mode:forwards;
-  }
-  @keyframes scrollBounce{
-    0%{opacity:1; transform:translateX(-50%) translateY(0);}
-    50%{opacity:1; transform:translateX(-50%) translateY(6px);}
-    100%{opacity:1; transform:translateX(-50%) translateY(0);}
   }
   .scroll-cue::after{
-    content:''; width:1px; height:44px;
+    content:''; width:1px; height:36px;
     background:linear-gradient(180deg,#eb7134,#c9a227,rgba(122,138,100,0));
     display:block;
+  }
+  @keyframes scrollBounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(5px);}
   }
 
   /* section break between hero and gallery */
@@ -545,11 +521,13 @@
   <a href="https://sanjaymehrotra.myportfolio.com" target="_blank" rel="noopener">Full Archive ↗</a>
 </div>
 
-<header class="hero" id="top">
-  <div id="heroSlides"></div>
-  <div class="hero-overlay"></div>
+<div class="hero-wrapper" id="top">
+  <div class="hero-stage">
+    <div id="heroSlides"></div>
+    <div class="hero-overlay"></div>
+  </div>
   <div class="scroll-cue">Scroll</div>
-</header>
+</div>
 
 <div class="section-divider">
   <span>Selected frames</span>
