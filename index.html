@@ -244,20 +244,20 @@
   /* ---------- ticker — slowed down, multi-color ---------- */
   .ticker-wrap{
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    background:var(--surface);
+    background:#FF9933;
     overflow:hidden; white-space:nowrap; padding:14px 0;
   }
   .ticker{
     display:inline-flex; gap:48px;
-    animation:scrollTicker 90s linear infinite;
+    animation:scrollTicker 135s linear infinite;
     font-family:var(--font-mono); font-size:.74rem; letter-spacing:.08em;
     text-transform:uppercase;
   }
-  .ticker .t-item{color:var(--text-dim);}
-  .ticker .t-item:nth-child(3n+1){color:var(--accent-gold);}
-  .ticker .t-item:nth-child(3n+2){color:var(--accent-slate);}
-  .ticker .t-item:nth-child(3n+3){color:var(--accent-moss);}
-  .ticker span.sep{color:rgba(237,232,220,.2);}
+  .ticker .t-item{color:#7a3800;}
+  .ticker .t-item:nth-child(3n+1){color:#3d1a00;}
+  .ticker .t-item:nth-child(3n+2){color:#7a3800;}
+  .ticker .t-item:nth-child(3n+3){color:#3d1a00;}
+  .ticker span.sep{color:rgba(61,26,0,.4);}
   @keyframes scrollTicker{
     from{transform:translateX(0);}
     to{transform:translateX(-50%);}
@@ -732,8 +732,11 @@ async function init(){
   renderGrid();
 
   const tickerStrip = document.getElementById('tickerStrip');
-  const tickerItems = photos.map(p => `${p.location} <span class="sep">·</span> ${p.coords}`);
-  tickerStrip.innerHTML = tickerItems.concat(tickerItems).map(t => `<span class="t-item">${t}</span>`).join('<span class="sep"> — </span>');
+  const uniqueRegions = [...new Set(photos.map(p => p.region).filter(Boolean))];
+  const tickerItems = uniqueRegions.map(r => `<span class="t-item">${r}</span>`);
+  const separator = '<span class="sep"> &mdash; </span>';
+  const strip = tickerItems.join(separator);
+  tickerStrip.innerHTML = strip + separator + strip; // duplicate for seamless loop
 
   async function initSlideshow(){
     try{
