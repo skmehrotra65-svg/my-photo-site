@@ -16,6 +16,33 @@ media_folder: "images"
 public_folder: "images"
 
 collections:
+  - name: "trip_reports"
+    label: "Trip Reports"
+    files:
+      - file: "data/trips.json"
+        label: "Trips and Route Details"
+        name: "trips"
+        fields:
+          - label: "Trips"
+            name: "trips"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { label: "URL Slug", name: "slug", widget: "string", hint: "Lowercase words separated by hyphens, e.g. atlantic-canada" }
+              - { label: "Trip Title", name: "title", widget: "string" }
+              - { label: "Trip Date", name: "date", widget: "string" }
+              - { label: "Status", name: "status", widget: "string", hint: "e.g. Before departure, From the road, Complete" }
+              - { label: "Summary", name: "summary", widget: "text" }
+              - label: "Route Stops"
+                name: "stops"
+                widget: "list"
+                summary: "{{place}} — {{province}}"
+                fields:
+                  - { label: "Place", name: "place", widget: "string" }
+                  - { label: "Province / Region", name: "province", widget: "string" }
+                  - { label: "Story Focus", name: "focus", widget: "string" }
+                  - { label: "Home Base", name: "stay", widget: "string" }
+
   - name: "photos"
     label: "Photos"
     files:
