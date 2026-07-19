@@ -1,0 +1,19 @@
+{
+  "trips": [
+    {
+      "slug": "atlantic-canada",
+      "title": "Atlantic Canada",
+      "date": "August 2026",
+      "status": "Before departure",
+      "summary": "A family journey through Newfoundland, Cape Breton, Nova Scotia and the Bay of Fundy—built around wildlife, photography and the character of the coast.",
+      "stops": [
+        {"place":"St. John’s","province":"Newfoundland & Labrador","focus":"Harbour light · Cape Spear · coastal culture","stay":"Sandman Signature"},
+        {"place":"Trinity & Bonavista","province":"Newfoundland & Labrador","focus":"Puffins · whales · historic outports","stay":"Trinity area"},
+        {"place":"Ingonish","province":"Cape Breton, Nova Scotia","focus":"Cabot Trail · moose country · Cape Smokey","stay":"Castle Rock Country Inn"},
+        {"place":"Halifax","province":"Nova Scotia","focus":"Waterfront · music · South Shore stories","stay":"Cambridge Suites"},
+        {"place":"Hopewell Cape","province":"New Brunswick","focus":"Fundy tides · sea stacks · coastal geology","stay":"Shepody Bay Inn"},
+        {"place":"Wolfville","province":"Nova Scotia","focus":"Annapolis Valley · dykelands · final light","stay":"Micro Boutique Living"}
+      ]
+    }
+  ]
+}
